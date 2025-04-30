@@ -12,18 +12,24 @@ def shortest_shortest_path(graph, source):
       a dict where each key is a vertex and the value is a tuple of
       (shortest path weight, shortest path number of edges). See test case for example.
     """
-    heap = [(0, 0, source)]
-    visited = {}
-    
+    heap = []
+    heappush(heap, (0, 0, source))  # (weight, edge_count, node)
+    best = {}
+
     while heap:
-        weight, edges, node = heappop(heap)
-        if node in visited:
+        weight, edge_count, node = heappop(heap)
+        
+        # If we've already found a better path, skip
+        if node in best:
             continue
-        visited[node] = (weight, edges)
-        for neighbor, w in graph.get(node, set()):
-            if neighbor not in visited:
-                heappush(heap, (weight + w, edges + 1, neighbor))
-    return visited
+        
+        best[node] = (weight, edge_count)
+
+        for neighbor, w in graph.get(node, []):
+            if neighbor not in best:
+                heappush(heap, (weight + w, edge_count + 1, neighbor))
+
+    return best
     
 
     
