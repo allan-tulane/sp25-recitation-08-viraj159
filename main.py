@@ -40,8 +40,20 @@ def bfs_path(graph, source):
       a dict where each key is a vertex and the value is the parent of 
       that vertex in the shortest path tree.
     """
-    ###TODO
-    pass
+    parents = {}
+    visited = set([source])
+    queue = [source]
+
+    while queue:
+        node = queue.pop(0)  # less efficient than deque.popleft()
+
+        for neighbor in graph.get(node, set()):
+            if neighbor not in visited:
+                visited.add(neighbor)
+                parents[neighbor] = node
+                queue.append(neighbor)
+    
+    return parents
 
 def get_sample_graph():
      return {'s': {'a', 'b'},
