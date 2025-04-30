@@ -71,6 +71,11 @@ def get_path(parents, destination):
       The shortest path from the source node to this destination node 
       (excluding the destination node itself). See test_get_path for an example.
     """
-    ###TODO
-    pass
+    path = []
+    while destination in parents:
+        parent = parents[destination]
+        path.append(parent)
+        destination = parent
+    path.reverse()
+    return '->'.join(path)
 
